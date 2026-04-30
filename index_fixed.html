@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Цифровая стратегия 2026 — Росмолодёжь</title>
+<style>
+@font-face{font-family:'Youthcode';src:url('fonts/Youthcode.otf') format('opentype');font-weight:400;font-display:swap;}
+@font-face{font-family:'ALS Granate';src:url('fonts/ALS_Granate_Regular.otf') format('opentype');font-weight:400;font-display:swap;}
+@font-face{font-family:'ALS Granate';src:url('fonts/ALS_Granate_Bold.otf') format('opentype');font-weight:700;font-display:swap;}
+
+:root{
+  --red:#E8392A; --red2:rgba(232,57,42,.08); --red3:rgba(232,57,42,.18);
+  --black:#141012; --dark:#1E191B; --dark2:#272124;
+  --mid:#3E393B; --muted:#928D90; --border:#E0DBD7;
+  --bg:#F4F1ED; --surface:#FDFAF7; --white:#FFFFFF;
+  --blue:#2847C8; --purple:#6B2AC2; --green:#1F8C55;
+  --h:'Youthcode',sans-serif; --b:'ALS Granate',sans-serif;
+  --ease:cubic-bezier(.22,.68,0,1.2);
+  --sidebar:260px;
+}
+*,::before,::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:var(--b);background:var(--bg);color:var(--black);line-height:1.7;overflow-x:hidden;}
+
+/* ── PROGRESS BAR ── */
+#progress-bar{
+  position:fixed;top:0;left:0;width:0%;height:3px;
+  background:var(--red);z-index:9999;
+  transition:width .1s linear;
+  box-shadow:0 0 12px rgba(232,57,42,.5);
+}
+
+/* ── SIDEBAR ── */
+#sidebar{
+  position:fixed;left:0;top:0;bottom:0;width:var(--sidebar);
+  background:var(--black);z-index:200;
+  display:flex;flex-direction:column;
+  padding:0;
+  border-right:1px solid #1E1A1C;
+}
+.sidebar-logo{
+  padding:28px 24px 24px;
+  border-bottom:1px solid #222;
+  display:flex;align-items:center;gap:12px;
+  flex-shrink:0;
+}
+.sidebar-logo img{height:32px;}
+.sidebar-logo-text .name{
+  font-family:var(--h);font-size:.9rem;color:#fff;
+  letter-spacing:.06em;text-transform:uppercase;line-height:1.2;
+}
+.sidebar-logo-text .sub{
+  font-family:var(--b);font-size:.62rem;color:var(--muted);
+  letter-spacing:.1em;text-transform:uppercase;
+}
+.sidebar-date{
+  padding:12px 24px;font-family:var(--b);font-size:.65rem;
+  color:#3A3437;letter-spacing:.08em;text-transform:uppercase;
+  border-bottom:1px solid #1A1618;flex-shrink:0;
+}
+.nav-list{flex:1;overflow-y:auto;padding:20px 0;}
+.nav-list::-webkit-scrollbar{width:0;}
+.nav-item{
+  display:block;padding:11px 24px;
+  font-family:var(--b);font-weight:700;font-size:.7rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:#524D50;text-decoration:none;
+  display:flex;align-items:center;gap:12px;
+  transition:color .2s,background .2s;
+  position:relative;
+  border-left:2px solid transparent;
+}
+.nav-item::before{
+  content:attr(data-num);
+  font-family:var(--h);font-size:.75rem;
+  color:#2A2527;transition:color .2s;
+  flex-shrink:0;min-width:20px;
+}
+.nav-item:hover{color:#888;background:rgba(255,255,255,.02);}
+.nav-item.active{color:#fff;border-left-color:var(--red);background:rgba(232,57,42,.06);}
+.nav-item.active::before{color:var(--red);}
+.nav-divider{height:1px;background:#1A1618;margin:8px 24px;}
+.sidebar-footer{
+  padding:20px 24px;border-top:1px solid #1A1618;
+  font-family:var(--b);font-size:.65rem;color:#2E2B2D;
+  letter-spacing:.06em;flex-shrink:0;
+}
+
+/* ── MAIN CONTENT ── */
+.main{margin-left:var(--sidebar);}
+
+/* ── HERO ── */
+#hero{
+  background:var(--black);
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  position:relative;overflow:hidden;
+}
+.hero-glow{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 70% at 75% 40%, rgba(232,57,42,.2) 0%, transparent 65%),
+    radial-gradient(ellipse 30% 40% at 20% 80%, rgba(104,42,194,.1) 0%, transparent 60%);
+  animation:glowPulse 6s ease-in-out infinite alternate;
+}
+@keyframes glowPulse{to{opacity:.6;}}
+.hero-grid-lines{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size:80px 80px;
+}
+.hero-body{
+  flex:1;display:grid;grid-template-columns:1fr 380px;
+  align-items:center;padding:80px 80px 60px;
+  position:relative;z-index:1;
+  max-width:1200px;margin:0 auto;width:100%;
+}
+.hero-eyebrow{
+  display:flex;align-items:center;gap:12px;margin-bottom:28px;
+  opacity:0;transform:translateY(16px);
+  animation:fadeUp .7s var(--ease) .1s forwards;
+}
+.hero-pill{
+  background:var(--red);font-family:var(--b);font-weight:700;
+  font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;
+  color:#fff;padding:5px 14px;border-radius:2px;
+}
+.hero-year{font-family:var(--b);font-size:.72rem;color:#3A3437;letter-spacing:.1em;}
+.hero h1{
+  font-family:var(--h);font-size:clamp(56px,7vw,96px);
+  line-height:.95;color:#fff;letter-spacing:.01em;
+  margin-bottom:28px;
+  opacity:0;transform:translateY(24px);
+  animation:fadeUp .8s var(--ease) .25s forwards;
+}
+.hero h1 em{color:var(--red);font-style:normal;display:block;}
+.hero-desc{
+  font-family:var(--b);font-size:1.05rem;color:#8A8490;
+  line-height:1.68;max-width:520px;margin-bottom:48px;
+  opacity:0;transform:translateY(16px);
+  animation:fadeUp .7s var(--ease) .4s forwards;
+}
+.hero-kpis{
+  display:flex;gap:40px;
+  opacity:0;transform:translateY(16px);
+  animation:fadeUp .7s var(--ease) .55s forwards;
+}
+.hero-kpi-val{
+  font-family:var(--h);font-size:3rem;color:#fff;line-height:1;
+}
+.hero-kpi-lbl{
+  font-family:var(--b);font-size:.68rem;color:#3A3437;
+  letter-spacing:.08em;text-transform:uppercase;margin-top:4px;
+}
+.hero-kpi-sep{width:1px;background:#252022;align-self:stretch;}
+.hero-mascot{
+  display:flex;align-items:center;justify-content:flex-end;
+  opacity:0;animation:mascotIn 1s var(--ease) .6s forwards;
+}
+.hero-mascot img{
+  width:300px;
+  filter:drop-shadow(0 0 80px rgba(232,57,42,.35));
+}
+@keyframes mascotIn{to{opacity:1;transform:none;}}
+.hero-scroll{
+  padding:24px 80px;
+  border-top:1px solid #1A1618;
+  display:flex;align-items:center;gap:16px;
+  opacity:0;animation:fadeIn 1s ease 1.2s forwards;
+}
+.hero-scroll-line{
+  width:40px;height:1px;background:var(--red);
+  position:relative;overflow:hidden;
+}
+.hero-scroll-line::after{
+  content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:#fff;animation:scanLine 2s ease-in-out 2s infinite;
+}
+@keyframes scanLine{to{left:200%;}}
+.hero-scroll span{
+  font-family:var(--b);font-size:.68rem;color:#3A3437;
+  letter-spacing:.1em;text-transform:uppercase;
+}
+@keyframes fadeUp{to{opacity:1;transform:none;}}
+@keyframes fadeIn{to{opacity:1;}}
+
+/* ── REVEAL ANIMATION ── */
+.reveal{
+  opacity:0;transform:translateY(28px);
+  transition:opacity .65s var(--ease), transform .65s var(--ease);
+}
+.reveal.visible{opacity:1;transform:none;}
+.reveal-delay-1{transition-delay:.1s;}
+.reveal-delay-2{transition-delay:.2s;}
+.reveal-delay-3{transition-delay:.3s;}
+.reveal-delay-4{transition-delay:.4s;}
+
+/* ── SECTION WRAPPER ── */
+.page-section{padding:72px 80px;position:relative;}
+.page-section + .page-section{border-top:1px solid var(--border);}
+
+/* ── PART BANNER ── */
+.part-banner{
+  background:var(--dark);padding:72px 80px 56px;
+  position:relative;overflow:hidden;
+}
+.part-banner::before{
+  content:attr(data-num);
+  position:absolute;right:60px;bottom:-20px;
+  font-family:var(--h);font-size:240px;color:rgba(255,255,255,.03);
+  line-height:1;pointer-events:none;letter-spacing:-.02em;
+}
+.part-banner::after{
+  content:'';position:absolute;bottom:0;left:0;width:120px;height:3px;
+  background:var(--red);
+}
+.part-banner .part-label{
+  font-family:var(--b);font-weight:700;font-size:.65rem;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:14px;
+}
+.part-banner h2{
+  font-family:var(--h);font-size:clamp(36px,4vw,56px);
+  color:#fff;line-height:1.1;letter-spacing:.01em;
+}
+
+/* ── SECTION HEADER ── */
+.sec-label{
+  font-family:var(--b);font-weight:700;font-size:.62rem;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:10px;
+}
+.sec-title{
+  font-family:var(--h);font-size:clamp(28px,3vw,42px);
+  color:var(--black);line-height:1.15;margin-bottom:28px;
+  letter-spacing:.01em;
+}
+.sec-title em{color:var(--red);font-style:normal;}
+.sec-intro{
+  font-family:var(--b);font-size:.78rem;color:var(--muted);
+  letter-spacing:.04em;margin-bottom:24px;
+}
+.sec-body p{
+  font-family:var(--b);font-size:.97rem;color:#3A3537;
+  line-height:1.78;margin-bottom:14px;max-width:72ch;
+}
+.sec-body p strong{color:var(--dark);}
+.sec-body ul{padding-left:20px;margin:10px 0 16px;}
+.sec-body ul li{
+  font-family:var(--b);font-size:.95rem;color:#3A3537;
+  line-height:1.7;margin-bottom:8px;
+}
+.sec-body ul li strong{color:var(--dark);}
+
+/* ── METRIC CARDS ── */
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin:28px 0;}
+.mcard{
+  background:var(--surface);border:1px solid var(--border);
+  border-top:3px solid var(--red);padding:26px 18px 22px;
+  position:relative;
+  transition:transform .25s var(--ease),box-shadow .25s;
+}
+.mcard::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(232,57,42,.04) 0%,transparent 60%);
+  pointer-events:none;
+}
+.mcard:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.1);}
+.mcard.b{border-top-color:var(--blue);}
+.mcard.p{border-top-color:var(--purple);}
+.mcard.g{border-top-color:var(--green);}
+.mcard-val{
+  font-family:var(--h);font-size:2.1rem;color:var(--black);
+  line-height:1.15;margin-bottom:6px;
+}
+.mcard-delta{font-family:var(--b);font-weight:700;font-size:.73rem;color:var(--green);margin-bottom:6px;}
+.mcard-delta.neg{color:var(--red);}
+.mcard-delta.neu{color:var(--muted);}
+.mcard-lbl{font-family:var(--b);font-size:.78rem;color:var(--muted);line-height:1.4;}
+
+/* ── CARDS ── */
+.cards{display:grid;gap:16px;margin:24px 0;}
+.cards.c2{grid-template-columns:1fr 1fr;}
+.cards.c3{grid-template-columns:1fr 1fr 1fr;}
+.cards.c4{grid-template-columns:1fr 1fr 1fr 1fr;}
+.card{
+  background:var(--surface);border:1px solid var(--border);
+  padding:24px;position:relative;overflow:hidden;
+  transition:transform .25s var(--ease),box-shadow .25s,border-color .25s;
+}
+.card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:0;
+  background:var(--red);transition:height .25s var(--ease);
+}
+.card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.1);border-color:#ccc;}
+.card:hover::before{height:3px;}
+.card-num{
+  font-family:var(--h);font-size:2.8rem;
+  color:rgba(0,0,0,.07);line-height:1;margin-bottom:10px;
+}
+.card-title{font-family:var(--b);font-weight:700;font-size:.97rem;color:var(--dark);margin-bottom:9px;line-height:1.35;}
+.card-body{font-family:var(--b);font-size:.86rem;color:#5A5560;line-height:1.68;}
+.card-body strong{color:var(--dark);}
+
+/* ── CALLOUT ── */
+.callout{
+  background:var(--black);border-left:3px solid var(--red);
+  padding:24px 28px;margin:24px 0;
+  position:relative;overflow:hidden;
+}
+.callout::after{
+  content:'';position:absolute;right:-40px;top:-40px;
+  width:120px;height:120px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(232,57,42,.12) 0%,transparent 70%);
+  pointer-events:none;
+}
+.callout-label{
+  font-family:var(--b);font-weight:700;font-size:.63rem;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:8px;
+}
+.callout p{
+  font-family:var(--b);font-size:.95rem;color:#C4BFC2;
+  line-height:1.7;max-width:none;margin:0;
+}
+
+/* ── INFOBOX ── */
+.ibox{
+  background:var(--surface);border:1px solid var(--border);
+  border-left:3px solid var(--red);
+  padding:16px 20px;margin:16px 0;
+  font-family:var(--b);font-size:.9rem;line-height:1.68;color:#3A3537;
+  transition:border-left-color .2s;
+}
+.ibox:hover{border-left-color:var(--black);}
+.ibox.g{border-left-color:var(--green);}
+.ibox strong{display:block;font-weight:700;color:var(--dark);margin-bottom:5px;font-size:.86rem;}
+
+/* ── TABLES ── */
+.tbl-wrap{overflow-x:auto;margin:22px 0;border-radius:2px;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+table{width:100%;border-collapse:collapse;font-size:.89rem;}
+thead tr{background:var(--black);}
+thead th{
+  padding:13px 18px;text-align:left;
+  font-family:var(--b);font-weight:700;font-size:.66rem;
+  letter-spacing:.12em;text-transform:uppercase;color:#7A7477;
+}
+tbody tr{background:var(--surface);transition:background .15s;}
+tbody tr:nth-child(even){background:#FAFAF8;}
+tbody tr:hover{background:#EDE8E2;}
+tbody td{
+  padding:12px 18px;border-bottom:1px solid var(--border);
+  font-family:var(--b);line-height:1.5;vertical-align:top;
+}
+tbody td:first-child{font-weight:700;color:var(--dark);}
+.tr-hi{background:#FFF2F0!important;}
+.tr-hi td:first-child{color:var(--red);}
+.tr-bad td{color:var(--red)!important;}
+.tr-warn td{color:#B86A00!important;}
+
+/* ── RUBRICS ── */
+.rubric-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;margin:22px 0;}
+.rcard{
+  background:var(--surface);border:1px solid var(--border);padding:18px 14px;
+  transition:transform .25s var(--ease),box-shadow .25s;
+  position:relative;overflow:hidden;
+}
+.rcard::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease);}
+.rcard:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.09);}
+.rcard:hover::after{transform:scaleX(1);}
+.rcard .day{font-family:var(--b);font-weight:700;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:2px;}
+.rcard .time{font-family:var(--b);font-size:.74rem;color:var(--muted);margin-bottom:8px;}
+.rcard .name{font-family:var(--b);font-weight:700;font-size:.9rem;color:var(--dark);margin-bottom:6px;line-height:1.3;}
+.rcard .desc{font-family:var(--b);font-size:.78rem;color:#706A6E;line-height:1.5;}
+
+/* ── STAGES ── */
+.stages{display:flex;flex-direction:column;gap:16px;margin:24px 0;}
+.stage{display:flex;gap:18px;align-items:flex-start;}
+.stage-dot{
+  flex-shrink:0;width:40px;height:40px;
+  background:var(--red);color:#fff;
+  font-family:var(--h);font-size:.82rem;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:2px;margin-top:2px;
+  transition:transform .2s var(--ease);
+}
+.stage:hover .stage-dot{transform:scale(1.1);}
+.stage h5{font-family:var(--b);font-weight:700;font-size:.97rem;margin-bottom:6px;color:var(--dark);}
+.stage p{font-family:var(--b);font-size:.88rem;color:#5A5560;line-height:1.65;}
+.stage ul{padding-left:16px;margin-top:6px;}
+.stage ul li{font-family:var(--b);font-size:.86rem;color:#5A5560;margin-bottom:5px;line-height:1.5;}
+
+/* ── MONTH TABS ── */
+.month-tabs{display:flex;gap:0;margin-bottom:20px;border-bottom:1px solid var(--border);}
+.mtab{
+  font-family:var(--b);font-weight:700;font-size:.72rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  padding:10px 24px;cursor:pointer;
+  border-bottom:2px solid transparent;
+  transition:color .2s,border-color .2s;
+  user-select:none;
+}
+.mtab.active,.mtab:hover{color:var(--red);border-bottom-color:var(--red);}
+.month-panels .mpanel{display:none;}
+.month-panels .mpanel.active{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.mth{background:var(--surface);border:1px solid var(--border);overflow:hidden;
+  transition:transform .25s var(--ease),box-shadow .25s;}
+.mth:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.09);}
+.mth-head{background:var(--dark);padding:14px 18px;display:flex;justify-content:space-between;align-items:baseline;}
+.mth-name{font-family:var(--h);font-size:1.05rem;color:#fff;}
+.mth-theme{font-family:var(--b);font-size:.72rem;color:var(--muted);}
+.mth-body{padding:14px 18px;}
+.mth-body h5{font-family:var(--b);font-weight:700;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.mth-body ul{padding-left:14px;margin-bottom:12px;}
+.mth-body ul li{font-family:var(--b);font-size:.82rem;color:#4A454A;margin-bottom:4px;line-height:1.5;}
+.mth-kpi{border-top:1px solid var(--border);padding:10px 18px;font-family:var(--b);font-weight:700;font-size:.78rem;color:var(--red);line-height:1.4;}
+
+/* ── COMPETITORS ── */
+.comp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:22px 0;}
+.comp{
+  background:var(--surface);border:1px solid var(--border);padding:24px;
+  transition:transform .25s var(--ease),box-shadow .25s;
+}
+.comp:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.1);}
+.comp-name{font-family:var(--h);font-size:1.05rem;color:var(--dark);margin-bottom:12px;padding-bottom:12px;border-bottom:2px solid var(--red);}
+.comp p{font-family:var(--b);font-size:.86rem;color:#5A5560;line-height:1.62;margin-bottom:10px;}
+.comp ul{padding-left:16px;}
+.comp ul li{font-family:var(--b);font-size:.85rem;color:#4A454A;margin-bottom:5px;line-height:1.5;}
+
+/* ── SWATCHES ── */
+.swatch-section{margin:16px 0 24px;}
+.swatch-label{font-family:var(--b);font-weight:700;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.swatches{display:flex;flex-wrap:wrap;gap:8px;}
+.swatch{
+  padding:11px 14px;font-family:var(--b);font-size:.73rem;
+  border-radius:2px;line-height:1.3;min-width:114px;
+  transition:transform .2s var(--ease),box-shadow .2s;
+  cursor:default;
+}
+.swatch:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 6px 16px rgba(0,0,0,.15);}
+
+/* ── TWO COL ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;}
+@media(max-width:900px){
+  :root{--sidebar:0px;}
+  #sidebar{display:none;}
+  .main{margin-left:0;}
+  .hero-body,.page-section,.part-banner{padding-left:24px;padding-right:24px;}
+  .hero-body{grid-template-columns:1fr;}
+  .hero-mascot,.cards.c4,.cards.c3,.rubric-grid,.comp-grid,.two-col,.three-col{grid-template-columns:1fr;}
+  .cards.c2{grid-template-columns:1fr;}
+  .month-panels .mpanel.active{grid-template-columns:1fr;}
+}
+
+/* ── FLOATING ACCENT ── */
+.big-num{
+  position:absolute;right:60px;top:50%;transform:translateY(-50%);
+  font-family:var(--h);font-size:180px;color:rgba(0,0,0,.04);
+  line-height:1;pointer-events:none;letter-spacing:-.02em;
+  user-select:none;
+}
+
+/* ── DIVIDER ACCENT ── */
+.accent-line{
+  display:flex;align-items:center;gap:16px;margin:32px 0 20px;
+}
+.accent-line::before{content:'';flex:0 0 32px;height:2px;background:var(--red);}
+.accent-line span{font-family:var(--b);font-weight:700;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+.accent-line::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* ── PLATFORM ROW ── */
+.platform-row{
+  display:grid;grid-template-columns:140px 1fr 1fr;gap:0;
+  border:1px solid var(--border);margin:8px 0;
+  transition:border-color .2s;
+}
+.platform-row:hover{border-color:#ccc;}
+.platform-cell{padding:16px 20px;border-right:1px solid var(--border);}
+.platform-cell:last-child{border-right:none;}
+.platform-cell.head{background:var(--dark);display:flex;align-items:center;}
+.platform-cell.head span{font-family:var(--h);font-size:.95rem;color:#fff;}
+.platform-cell.hi{background:#FFF2F0;}
+.platform-cell.hi span,.platform-cell.hi p{color:var(--dark);}
+.platform-cell p{font-family:var(--b);font-size:.88rem;color:#5A5560;line-height:1.55;margin:0;}
+.platform-row.featured .platform-cell.head{background:var(--red);}
+
+/* ── SCROLL UP BTN ── */
+#scrollup{
+  position:fixed;right:32px;bottom:32px;
+  width:44px;height:44px;background:var(--red);color:#fff;
+  border:none;cursor:pointer;border-radius:2px;
+  font-size:18px;display:flex;align-items:center;justify-content:center;
+  opacity:0;transform:translateY(12px);transition:opacity .3s,transform .3s;
+  z-index:500;box-shadow:0 4px 16px rgba(232,57,42,.4);
+}
+#scrollup.visible{opacity:1;transform:none;}
+#scrollup:hover{background:#C02E20;}
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<!-- ══ SIDEBAR ══ -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <img src="assets/kon-ogon.png" alt="Конь-огонь">
+    <div class="sidebar-logo-text">
+      <div class="name">Росмолодёжь</div>
+      <div class="sub">Код молодёжи</div>
+    </div>
+  </div>
+  <div class="sidebar-date">27 апреля 2026</div>
+  <div class="nav-list">
+    <a class="nav-item" href="#hero" data-num="00">Обзор</a>
+    <a class="nav-item" href="#summary" data-num="01">Резюме</a>
+    <div class="nav-divider"></div>
+    <a class="nav-item" href="#part1" data-num="I">MAX — стратегия</a>
+    <a class="nav-item" href="#s1" data-num="1">Почему MAX</a>
+    <a class="nav-item" href="#s2" data-num="2">Статистика</a>
+    <a class="nav-item" href="#s3" data-num="3">Анализ контента</a>
+    <a class="nav-item" href="#s4" data-num="4">8 практик роста</a>
+    <a class="nav-item" href="#s5" data-num="5">Трансляции</a>
+    <a class="nav-item" href="#s6" data-num="6">Контент-стратегия</a>
+    <a class="nav-item" href="#s7" data-num="7">Тактика</a>
+    <a class="nav-item" href="#s8" data-num="8">Внедрение</a>
+    <div class="nav-divider"></div>
+    <a class="nav-item" href="#part2" data-num="II">Платформы</a>
+    <a class="nav-item" href="#s9" data-num="9">ВКонтакте</a>
+    <a class="nav-item" href="#s10" data-num="10">Сайт</a>
+    <a class="nav-item" href="#s11" data-num="11">Дзен</a>
+    <div class="nav-divider"></div>
+    <a class="nav-item" href="#part3" data-num="III">Конкуренты</a>
+    <a class="nav-item" href="#s12" data-num="12">Анализ</a>
+    <a class="nav-item" href="#s13" data-num="13">Платформы</a>
+    <div class="nav-divider"></div>
+    <a class="nav-item" href="#part4" data-num="IV">Медиаплан</a>
+    <a class="nav-item" href="#s14" data-num="14">Аудит</a>
+    <a class="nav-item" href="#s15" data-num="15">Добавляем</a>
+    <a class="nav-item" href="#s16" data-num="16">Календарь</a>
+    <div class="nav-divider"></div>
+    <a class="nav-item" href="#appendix" data-num="A">Брендинг</a>
+  </div>
+  <div class="sidebar-footer">Цифровая стратегия 2026<br>MAX как главная платформа</div>
+</nav>
+
+<div class="main">
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-body">
+    <div>
+      <div class="hero-eyebrow">
+        <span class="hero-pill">Цифровая стратегия</span>
+        <span class="hero-year">2026 / Федеральное агентство по делам молодёжи</span>
+      </div>
+      <h1>MAX как<br><em>главная</em><br>платформа</h1>
+      <p class="hero-desc">Аудит, конкуренты, контентная стратегия и медиаплан Росмолодёжи на 12 месяцев.</p>
+      <div class="hero-kpis">
+        <div><div class="hero-kpi-val" style="font-size: 25px; font-family: &quot;ALS Granate&quot;">22 489</div><div class="hero-kpi-lbl">Подписчиков сейчас</div></div>
+        <div class="hero-kpi-sep"></div>
+        <div><div class="hero-kpi-val" style="width: 100px; font-size: 25px; font-family: &quot;ALS Granate&quot;">70-80к</div><div class="hero-kpi-lbl">Цель 2026</div></div>
+        <div class="hero-kpi-sep"></div>
+        <div><div class="hero-kpi-val" style="font-family: &quot;ALS Granate&quot;; font-size: 25px; width: 130px">3,5 раза &gt; </div><div class="hero-kpi-lbl">Рост аудитории</div></div>
+      </div>
+    </div>
+    <div class="hero-mascot">
+      <img src="assets/kon-ogon.png" alt="Конь-огонь — маскот Кода молодёжи" style="width:400px;object-fit:cover;opacity:1;">
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>Прокрутите вниз</span>
+  </div>
+</section>
+
+<!-- ══ SUMMARY ══ -->
+<div id="summary" class="part-banner" data-num="01">
+  <div class="part-label reveal">Резюме для руководства</div>
+  <h2 class="reveal reveal-delay-1">Стратегический контекст<br>и цели на год</h2>
+</div>
+
+<div class="page-section" style="position:relative">
+  <div class="sec-body reveal">
+    <p>Этот документ — стратегия цифрового присутствия Росмолодёжи на 2026 год, построенная вокруг одного приоритета: <strong>превратить мессенджер MAX в главную коммуникационную площадку агентства.</strong></p>
+    <p>MAX выбран приоритетной платформой не по идеологическим, а по стратегическим причинам. Государство активно продвигает мессенджер как национальную инфраструктуру, крупные федеральные СМИ (ТАСС, Россия Сегодня, m24, Татмедиа, РИА Новости) уже выстраивают новые медиапривычки аудитории через MAX. Для Росмолодёжи это окно возможностей: занять лидерскую позицию среди молодёжных и образовательных госструктур, пока конкуренты не заняли её первыми.</p>
+  </div>
+
+  <div class="accent-line reveal"><span>Главный диагноз</span></div>
+  <div class="sec-body reveal">
+    <p style="">Между объёмом производимого контента и реальными результатами потеряна управляемость. В MAX выходит <strong>888 публикаций в месяц</strong> — это лидерский показатель. Но прирост подписчиков — всего <strong>1,6% за месяц</strong>, конверсия просмотров в подписки — <strong>0,2%</strong>. Причина: канал ведётся как обычная лента в соцсети, без специфических механик MAX.</p>
+    <p><strong>Решение:</strong> не увеличивать объём, а перестроить модель работы. Применить практики роста, описанные в официальных материалах MAX для СМИ. Внедрить видео-трансляции через ВК Видео. Запустить эксклюзивный контент. Превратить MAX в первоисточник, на который будут ссылаться внешние СМИ.</p>
+  </div>
+
+  <div class="metrics reveal reveal-delay-1">
+    <div class="mcard"><div class="mcard-val" data-count="22489" style="font-family: &quot;ALS Granate&quot;">22 489</div><div class="mcard-delta">+357 (+1,6%)</div><div class="mcard-lbl">Подписчики сейчас</div></div>
+    <div class="mcard b"><div class="mcard-val" data-count="888" style="font-family: &quot;ALS Granate&quot;">888</div><div class="mcard-delta">+23 (+2,7%)</div><div class="mcard-lbl">Публикаций в месяц</div></div>
+    <div class="mcard"><div class="mcard-val" data-count="167445" style="font-family: &quot;ALS Granate&quot;">167 445</div><div class="mcard-delta">+26,1%</div><div class="mcard-lbl">Просмотров за 30 дней</div></div>
+    <div class="mcard p"><div class="mcard-val" style="font-family: &quot;ALS Granate&quot;">0,21%</div><div class="mcard-delta neg">Конверсия в подписку</div><div class="mcard-lbl">Критически низкая</div></div>
+  </div>
+
+  <div class="accent-line reveal"><span>Цели на 2026 год</span></div>
+  <div class="tbl-wrap reveal">
+    <table>
+      <thead><tr><th>Платформа</th><th>Сейчас</th><th>Конец 2026</th></tr></thead>
+      <tbody>
+        <tr class="tr-hi"><td>MAX — основной канал</td><td>22 489</td><td>75 000 - 80 000</td></tr>
+        <tr><td>MAX — нишевые каналы (×3)</td><td>0</td><td>25 000+ совокупно</td></tr>
+        <tr><td>ВКонтакте — ER</td><td>0,7%</td><td>2,5–3%</td></tr>
+        <tr><td>fadm.gov.ru — посетители/мес</td><td>1 244</td><td>15 000</td></tr>
+        <tr><td>Дзен — подписчики</td><td>757</td><td>Решение в первый месяц</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="accent-line reveal"><span>Четыре приоритета на год</span></div>
+  <div class="stages reveal">
+    <div class="stage"><div class="stage-dot">01</div><div><h5>MAX — первоисточник молодёжной политики</h5><p>75–80 тыс. подписчиков основного канала + 3 нишевых канала совокупно 25 000+.</p></div></div>
+    <div class="stage"><div class="stage-dot">02</div><div><h5>Контент-сегментация</h5><p>Один универсальный канал заменяется сетью тематических, как сделало Движение Первых.</p></div></div>
+    <div class="stage"><div class="stage-dot">03</div><div><h5>Восстановить роль сайта fadm.gov.ru</h5><p>SEO-витрина и точка конверсии: с 1 244 до 15 000 посетителей в месяц.</p></div></div>
+    <div class="stage"><div class="stage-dot">04</div><div><h5>Стратегическое решение по Дзену</h5><p>Перезапуск или закрытие с переадресацией усилий — принять в первый месяц.</p></div></div>
+  </div>
+</div>
+
+<!-- ══ PART I ══ -->
+<div id="part1" class="part-banner" data-num="I">
+  <div class="part-label reveal">Часть I</div>
+  <h2 class="reveal reveal-delay-1">Стратегический фокус —<br>мессенджер MAX</h2>
+</div>
+
+<!-- s1 -->
+<div id="s1" class="page-section">
+  <div class="sec-label reveal">Раздел 1</div>
+  <div class="sec-title reveal reveal-delay-1">Почему мAX становится<br>главной платформой</div>
+  <div class="cards c4 reveal reveal-delay-2">
+    <div class="card"><div class="card-num">01</div><div class="card-title">Государственная инфраструктура</div><div class="card-body">MAX — национальный мессенджер. Алгоритмическая поддержка, институциональная легитимность и растущая аудитория — каждый месяц больше потенциальных подписчиков.</div></div>
+    <div class="card"><div class="card-num">02</div><div class="card-title">Незанятая ниша</div><div class="card-body">Среди конкурентов лидерства в MAX не занял никто. Движение Первых имеет ~половину от подписной базы Росмолодёжи. Окно возможностей закроется в 2026 году.</div></div>
+    <div class="card"><div class="card-num">03</div><div class="card-title">Алгоритмическая поддержка</div><div class="card-body">Просмотры +26,1% при росте подписчиков лишь +1,6%. Алгоритм активно показывает контент незнакомым пользователям.</div></div>
+    <div class="card"><div class="card-num">04</div><div class="card-title">Прямой канал без посредников</div><div class="card-body">Сообщение доходит без алгоритмической фильтрации — как email-рассылка с мобильным удобством мессенджера.</div></div>
+  </div>
+  <div class="callout reveal">
+    <div class="callout-label">Вывод</div>
+    <p>MAX — не одна из площадок. Это новая основа цифрового присутствия Росмолодёжи на 2026 год. 
+Все остальные платформы должны работать на него.</p>
+  </div>
+</div>
+
+<!-- s2 -->
+<div id="s2" class="page-section">
+  <div class="sec-label reveal">Раздел 2</div>
+  <div class="sec-title reveal reveal-delay-1">MAX — статистика<br>канала Росмолодёжи</div>
+  <p class="sec-intro reveal">Источник: maxstat.ru, период анализа — 30 дней до 26 апреля 2026.</p>
+  <div class="metrics reveal reveal-delay-2">
+    <div class="mcard"><div class="mcard-val" style="font-family: &quot;ALS Granate&quot;">22 489</div><div class="mcard-delta">+357 (+1,6%)</div><div class="mcard-lbl">Подписчики</div></div>
+    <div class="mcard b"><div class="mcard-val" style="font-family: &quot;ALS Granate&quot;">888</div><div class="mcard-delta">+23 (+2,7%)</div><div class="mcard-lbl">Публикации за период</div></div>
+    <div class="mcard"><div class="mcard-val" style="font-family: &quot;ALS Granate&quot;">167 445</div><div class="mcard-delta">+34 653 (+26,1%)</div><div class="mcard-lbl">Просмотры за 30 дней</div></div>
+    <div class="mcard p"><div class="mcard-val" style="font-family: &quot;ALS Granate&quot;">0,21%</div><div class="mcard-delta neg">критически низкая</div><div class="mcard-lbl">Конверсия → подписка</div></div>
+    <div class="mcard"><div class="mcard-val" style="font-family: &quot;ALS Granate&quot;">7,3%</div><div class="mcard-delta neu">—</div><div class="mcard-lbl">Доля просмотров топ-поста</div></div>
+    <div class="mcard b"><div class="mcard-val" style="font-family: &quot;ALS Granate&quot;">~4 800</div><div class="mcard-delta neu">стабильно</div><div class="mcard-lbl">Среднее просмотров на пост</div></div>
+  </div>
+  <div class="two-col reveal reveal-delay-3">
+    <div>
+      <div class="accent-line"><span>Структура контента</span></div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Формат</th><th>Доля</th><th>Оценка</th></tr></thead>
+          <tbody>
+            <tr><td>Фото</td><td>82,6%</td><td>Доминирует — избыточно</td></tr>
+            <tr class="tr-hi"><td>Видео</td><td>13,0%</td><td>Критически мало</td></tr>
+            <tr><td>Текст без медиа</td><td>4,3%</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <div class="accent-line"><span>Диагноз</span></div>
+      <div class="ibox">
+        <strong>Главная техническая проблема</strong>
+        82,6% фото и только 13% видео в условиях, когда видео в MAX продвигается алгоритмически шире, означает недополучение охвата на десятки тысяч просмотров ежедневно.
+      </div>
+      <div class="ibox">
+        <strong>Алгоритм работает на канал</strong>
+        Рост просмотров (+26,1%) опережает рост подписчиков (+1,6%) в 16 раз. Инфраструктура платформы готова поддерживать рост — нужно дать ей качественный контент.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- s3 -->
+<div id="s3" class="page-section">
+  <div class="sec-label reveal">Раздел 3</div>
+  <div class="sec-title reveal reveal-delay-1">MAX — глубокий разбор публикаций</div>
+  <p class="sec-intro reveal" style="line-height: 0.65">Данные: 22–25 апреля 2026, открытая статистика maxstat.ru.</p>
+  <div class="tbl-wrap reveal reveal-delay-2">
+    <table>
+      <thead><tr><th>Дата</th><th>Формат и тема</th><th>Просмотры</th></tr></thead>
+      <tbody>
+        <tr><td>25.04, 08:30</td><td>Видео. «Единство — это…», нарезка ответов участников Слёта РСО</td><td>2 840</td></tr>
+        <tr><td>24.04, 15:44</td><td>Карточка-дайджест. «Аромат мяты повышает концентрацию» + ⚡ новости</td><td>3 385</td></tr>
+        <tr><td>24.04, 13:01</td><td>Анонс. «Солдатский конверт — 2026», конкурс патриотической песни</td><td>3 426</td></tr>
+        <tr><td>24.04, 10:09</td><td>Анонс. «Бессмертный полк онлайн», как принять участие</td><td>3 995</td></tr>
+        <tr><td>24.04, 06:30</td><td>Карусель из 6 фото. «Подняли архивы наших мам»</td><td>5 072</td></tr>
+        <tr><td>23.04, 13:00</td><td>Анонс. «Страна глазами молодёжи!», конкурс блогеров</td><td>5 921</td></tr>
+        <tr><td>23.04, 09:50</td><td>Карусель из 4 фото. «За кулисами авиационного производства»</td><td>5 710</td></tr>
+        <tr class="tr-hi"><td>23.04, 07:00</td><td>Карточка. Призыв к Всероссийской неделе субботников</td><td>6 121</td></tr>
+        <tr class="tr-hi"><td>22.04, 17:00</td><td>Карточка-дайджест. «Шум влияет на аппетит» + ⚡ новости</td><td>6 626</td></tr>
+        <tr class="tr-hi"><td>22.04, 14:30</td><td>Карусель из 3 фото. Лейла Зотова в Аргентине</td><td>6 425</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="accent-line reveal"><span>Пять контентных паттернов</span></div>
+  <div class="cards c3 reveal reveal-delay-1">
+    <div class="card"><div class="card-num">①</div><div class="card-title">Дайджест «факт + новости» — лучший формат</div><div class="card-body">6 626 просмотров. Структура: один интересный факт + 4–5 новостей с маркером ⚡. Паттерн нужно тиражировать.</div></div>
+    <div class="card"><div class="card-num">②</div><div class="card-title">Карусели лучше одиночных фото</div><div class="card-body">Все три карусели — в верхней половине по охвату. Время удержания — ключевой фактор ранжирования в MAX.</div></div>
+    <div class="card"><div class="card-num">③</div><div class="card-title">Два несвязанных редакционных голоса</div><div class="card-body">Официальный тон соседствует с дружеским без связки. Аудитория теряет доверие к обоим стилям.</div></div>
+    <div class="card"><div class="card-num">④</div><div class="card-title">Маркер ⚡ работает как структурный элемент</div><div class="card-body">Фирменная, узнаваемая фишка. Стоит масштабировать: акцент в шаблонах карточек, иконка рубрик.</div></div>
+    <div class="card"><div class="card-num">⑤</div><div class="card-title">Слабые CTA</div><div class="card-body">В большинстве постов нет призыва или он размыт. Нужен конкретный дедлайн: «Подайте заявку до 15 мая, грант до 1 млн руб.»</div></div>
+    <div class="card" style="background:#FFF2F0;border-color:#F5C5C0">
+      <div class="card-num" style="color:var(--red)">!</div>
+      <div class="card-title" style="color:var(--red)">Что общего у лидеров</div>
+      <div class="card-body">Визуальное разнообразие, простая структура, связь с повседневностью. Не анонсы, не официальные новости — материалы, в которых читатель находит что-то небанальное.</div>
+    </div>
+  </div>
+</div>
+
+<!-- s4 -->
+<div id="s4" class="page-section">
+  <div class="sec-label reveal">Раздел 4</div>
+  <div class="sec-title reveal reveal-delay-1">Восемь практик роста<br>аудитории в MAX</div>
+  <div class="sec-body reveal"><p style="font-family: &quot;ALS Granate&quot;; color: rgb(12, 12, 12)">Описаны в официальных материалах MAX для СМИ. По состоянию на апрель 2026 Росмолодёжь не реализует ни одну из них в полном объёме.</p></div>
+  <div class="cards c2 reveal reveal-delay-2">
+    <div class="card"><div class="card-num">1</div><div class="card-title">Эксклюзивные новости и развёрнутые комментарии в MAX</div><div class="card-body"><strong>Суть:</strong> значимый контент выходит сначала в MAX, затем — в других соцсетях.<br><br><strong>Что делать:</strong> минимум 3 эксклюзива в неделю — комментарии Г. А. Гурова, итоги мероприятий, первые анонсы. Тизер в ВКонтакте: «Полный комментарий —<br>в MAX по ссылке».</div></div>
+    <div class="card"><div class="card-num">2</div><div class="card-title">Цитирование руководства со ссылкой на MAX как первоисточник</div><div class="card-body"><strong>Суть:</strong> пресс-служба готовит комментарии так, чтобы СМИ ссылались на MAX-канал.<br><br><strong>Что делать:</strong> все комментарии руководства — в MAX за 30 минут до отправки в редакции. В пресс-релизе: «Полная цитата опубликована в канале в MAX».</div></div>
+    <div class="card"><div class="card-num">3</div><div class="card-title">Оперативные новости в MAX раньше других платформ</div><div class="card-body"><strong>Суть:</strong> для внутренних новостей агентства MAX становится первой площадкой.<br><br><strong>Что делать:</strong> при инфоповоде — первый пост в MAX, затем распространение. Маркер ⚡ как индикатор срочности. Договорённость с редакцией.</div></div>
+    <div class="card"><div class="card-num">4</div><div class="card-title">Ссылки на канал в MAX на других платформах</div><div class="card-body"><strong>Суть:</strong> при каждой публикации в ВКонтакте, Дзене, СМИ — ссылка на MAX-канал.<br><br><strong>Что делать:</strong> QR-код в финальном кадре видео ВКонтакте. Закреплённый пост в шапке сообщества. Врезка «Самое оперативное — в MAX» в каждой статье Дзена.</div></div>
+    <div class="card"><div class="card-num">5</div><div class="card-title">Замена интерфейса соцсетей на MAX в эфирах телеканалов</div><div class="card-body"><strong>Суть:</strong> при работе с ТВ — в кадре интерфейс MAX с QR-кодом.<br><br><strong>Что делать:</strong> согласовать видеоряд с партнёрскими СМИ. Плашка с QR при каждом выходе руководителя в эфир. Аналогично для радио и прессы.</div></div>
+    <div class="card"><div class="card-num">6</div><div class="card-title">Интеграция ссылок на MAX-каналы на сайты изданий</div><div class="card-body"><strong>Суть:</strong> партнёрские СМИ размещают виджеты или ссылки на MAX-канал Росмолодёжи.<br><br><strong>Что делать:</strong> баннер «Читать Росмолодёжь в MAX». Договорённости с 5–7 партнёрскими СМИ о постоянном размещении.</div></div>
+    <div class="card"><div class="card-num">7</div><div class="card-title">Кнопка «Поделиться в MAX» на fadm.gov.ru</div><div class="card-body"><strong>Суть:</strong> к стандартным кнопкам «Поделиться» добавляется кнопка MAX.<br><br><strong>Что делать:</strong> технический срок — 2 недели. Внедрить во все шаблоны страниц и лендинги программ (Гранты, Таврида.АРТ и др.).</div></div>
+    <div class="card"><div class="card-num">8</div><div class="card-title">Креативное размещение на медиаповерхностях</div><div class="card-body"><strong>Суть:</strong> медиаэкраны форумов и акций для продвижения MAX-канала.<br><br><strong>Что делать:</strong> на каждом форуме (Таврида, Машук, iВолга) — экран с QR-кодом и слоганом «Кода молодёжи». Наружная реклама на профориентационных неделях.</div></div>
+  </div>
+  <div class="callout reveal">
+    <div class="callout-label">Итог по восьми практикам</div>
+    <p>Если внедрить хотя бы пять из восьми практик до конца июня 2026 года, прирост подписчиков вырастет 
+с 1,6% до 8–10% в месяц. Это удвоение аудитории за полгода.</p>
+  </div>
+</div>
+
+<!-- s5 -->
+<div id="s5" class="page-section">
+  <div class="sec-label reveal">Раздел 5</div>
+  <div class="sec-title reveal reveal-delay-1">Видео-трансляции в мAX<br>как стратегический инструмент</div>
+  <div class="sec-body reveal"><p>Трансляции через интеграцию ВК Видео и MAX — отдельная сильная возможность платформы, которую Росмолодёжь почти не использует.</p></div>
+  <div class="ibox reveal">
+    <strong>Как работает интеграция</strong>
+    Автор создаёт трансляцию в ВК Видео → ссылка закрепляется в MAX с push-уведомлением → подписчик запускает трансляцию прямо внутри MAX (embedded-fullscreen) или переходит в приложение ВКонтакте. Push гарантирует охват подписчиков почти на 100%.
+  </div>
+  <div class="accent-line reveal"><span>Пять типов трансляций</span></div>
+  <div class="stages reveal reveal-delay-1">
+    <div class="stage"><div class="stage-dot">1</div><div><h5>Трансляции форумов и крупных мероприятий</h5><p>Каждый форум (Таврида, Машук, Территория смыслов, iВолга) — материал на 5–7 дней непрерывного контента. Прямая трансляция пленарных сессий, награждений, концертов даёт совокупный охват, сопоставимый с телевизионным.</p></div></div>
+    <div class="stage"><div class="stage-dot">2</div><div><h5>Трансляции из Молодёжных столиц</h5><p>В 2026 году молодёжные столицы — Пермь и Омск. Прямые эфиры на День молодёжи 27 июня создают эффект «Россия из тысячи мест».</p></div></div>
+    <div class="stage"><div class="stage-dot">3</div><div><h5>Прямые эфиры с руководителем агентства</h5><p>Раз в месяц — короткий эфир Г. А. Гурова с ответами на вопросы подписчиков. Push-уведомление за час, 30–40 минут в эфире, запись остаётся в канале. Сильный механизм лояльности.</p></div></div>
+    <div class="stage"><div class="stage-dot">4</div><div><h5>Трансляции экспертных дискуссий</h5><p>При запуске крупных программ — трансляция круглого стола с экспертами агентства. Снижает нагрузку на пресс-службу и одновременно продвигает программы.</p></div></div>
+    <div class="stage"><div class="stage-dot">5</div><div><h5>Трансляции церемоний награждения</h5><p>Финал премии «Лица года Росмолодёжи», итоги МФМ-2026, победители грантовых конкурсов. Создают эмоциональный пик и хорошо ретранслируются в дальнейшие материалы.</p></div></div>
+  </div>
+  <div class="accent-line reveal"><span>Регламент трансляций</span></div>
+  <div class="tbl-wrap reveal reveal-delay-1">
+    <table>
+      <thead><tr><th>Действие</th><th>Срок</th></tr></thead>
+      <tbody>
+        <tr><td>Анонс трансляции в посте канала + закрепление с push-уведомлением</td><td>За 24 часа</td></tr>
+        <tr><td>Дополнительный анонс в ВКонтакте с прямой ссылкой на MAX</td><td>За 6 часов</td></tr>
+        <tr><td>Сохранение записи в канал с навигацией по тайм-кодам</td><td>После трансляции</td></tr>
+        <tr><td>Публикация ключевых фрагментов как отдельных постов</td><td>Через сутки</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- s6 -->
+<div id="s6" class="page-section">
+  <div class="sec-label reveal">Раздел 6</div>
+  <div class="sec-title reveal reveal-delay-1">Контентная стратегия<br>MAX на год</div>
+
+  <div class="accent-line reveal"><span>Пять опорных тем</span></div>
+  <div class="tbl-wrap reveal reveal-delay-1">
+    <table>
+      <thead><tr><th>Тема</th><th>Доля</th><th>Что попадает</th></tr></thead>
+      <tbody>
+        <tr class="tr-hi"><td>Возможности</td><td>40%</td><td>Гранты, форумы, конкурсы, программы, стажировки</td></tr>
+        <tr><td>Герои</td><td>20%</td><td>Истории молодых россиян: победители, лидеры, авторы проектов</td></tr>
+        <tr><td>Образование и карьера</td><td>15%</td><td>Нацпроект «Молодёжь и дети», образовательные программы</td></tr>
+        <tr><td>События страны</td><td>15%</td><td>Праздники, патриотика, культурная повестка</td></tr>
+        <tr><td>Жизнь агентства</td><td>10%</td><td>Закулисье, команда, личные коммуникации руководства</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="accent-line reveal"><span>Семь регулярных рубрик с привязкой к дням недели</span></div>
+  <div class="sec-body reveal"><p>Принцип: каждая рубрика выходит в один и тот же день в одно и то же время. Аудитория знает, что ждать и когда возвращаться.</p></div>
+  <div class="rubric-grid reveal reveal-delay-1">
+    <div class="rcard" style="width: 120.422px"><div class="day">Понедельник</div><div class="time">10:00</div><div class="name">Возможности недели</div><div class="desc">Карточка-дайджест с 5 актуальными грантами и конкурсами</div></div>
+    <div class="rcard" style="width: 120.43px"><div class="day">Вторник</div><div class="time">14:00</div><div class="name">Герой Росмолодёжи</div><div class="desc">Фото-интервью с участником программы (карусель из 4–6 фото)</div></div>
+    <div class="rcard" style="width: 120.023px"><div class="day">Среда</div><div class="time">12:00</div><div class="name">Вопрос экспертам</div><div class="desc">Один вопрос подписчика → один развёрнутый ответ</div></div>
+    <div class="rcard" style="width: 120.031px"><div class="day">Четверг</div><div class="time">11:00</div><div class="name">Где молодёжь</div><div class="desc">Региональный фокус: что происходит в одном из субъектов</div></div>
+    <div class="rcard" style="width: 120.703px"><div class="day">Пятница</div><div class="time">17:00</div><div class="name">Дайджест недели</div><div class="desc">Главное за неделю: 5 событий в формате карточек с ⚡</div></div>
+    <div class="rcard" style="width: 120.703px"><div class="day">Суббота</div><div class="time">13:00</div><div class="name">Код молодёжи</div><div class="desc">Креатив в стиле гайдлайна: цитата + визуал</div></div>
+    <div class="rcard" style="width: 120.7px"><div class="day">Воскресенье</div><div class="time">11:00</div><div class="name">История</div><div class="desc">Длинный пост-история с глубоким эмоциональным сюжетом</div></div>
+  </div>
+
+  <div class="accent-line reveal"><span>Эксклюзивный контент — только в MAX</span></div>
+  <div class="sec-body reveal reveal-delay-1">
+    <ul>
+      <li><strong>Полный комментарий руководителя агентства</strong> — еженедельно. В соцсетях — короткая цитата с ссылкой «Полностью в MAX».</li>
+      <li><strong>Эксклюзивные новости из проектов агентства</strong> — за 30–60 минут до публикации на других площадках.</li>
+      <li><strong>Закадровые материалы с форумов и мероприятий</strong> — фото и видео, которые не попадают в основную ленту.</li>
+      <li><strong>Q&amp;A-сессии с экспертами</strong> — раз в неделю один эксперт агентства отвечает на вопросы подписчиков.</li>
+      <li><strong>Развёрнутые истории грантополучателей</strong> — в формате, отличном от карусели ВКонтакте и лонгрида в Дзене.</li>
+    </ul>
+  </div>
+
+  <div class="accent-line reveal"><span>Три нишевых канала в MAX</span></div>
+  <div class="metrics reveal reveal-delay-1" style="grid-template-columns:repeat(3,1fr)">
+    <div class="mcard"><div class="mcard-val" style="font-size:1.4rem">Гранты</div><div class="mcard-delta">Запуск: январь 2026</div><div class="mcard-lbl">Цель — 12 000 подписчиков. Разборы конкурсов, инструкции, победители, дедлайны.</div></div>
+    <div class="mcard b"><div class="mcard-val" style="font-size:1.4rem">Форумы</div><div class="mcard-delta">Запуск: апрель 2026</div><div class="mcard-lbl">Цель — 8 000 подписчиков. Программы, регистрации, трансляции, резиденты.</div></div>
+    <div class="mcard p"><div class="mcard-val" style="font-size:1.4rem">Карьера</div><div class="mcard-delta">Запуск: сентябрь 2026</div><div class="mcard-lbl">Цель — 5 000 подписчиков. Профориентация, стажировки, молодые руководители.</div></div>
+  </div>
+  <div class="callout reveal">
+    <div class="callout-label">Совокупная цель</div>
+    <p>Аудитория сети каналов в MAX к концу 2026 года: около 100 тысяч человек — в 4,5 раза больше текущей базы.</p>
+  </div>
+</div>
+
+<!-- s7 -->
+<div id="s7" class="page-section">
+  <div class="sec-label reveal">Раздел 7</div>
+  <div class="sec-title reveal reveal-delay-1">Тактика роста<br>аудитории и вовлечённости</div>
+
+  <div class="two-col">
+    <div>
+      <div class="accent-line reveal"><span>Приёмы увеличения охвата</span></div>
+      <div class="stages reveal reveal-delay-1">
+        <div class="stage"><div class="stage-dot">1</div><div><h5>Заголовок-крючок в первой строке</h5><p>Первые 50 символов поста должны давать причину прочитать дальше. Не «20 апреля состоялось мероприятие», а «Это видео получило 2 миллиона просмотров за сутки. Внутри — почему».</p></div></div>
+        <div class="stage"><div class="stage-dot">2</div><div><h5>Карусель вместо одиночного фото</h5><p>Каждый дополнительный кадр — +5–7 секунд удержания, что напрямую влияет на алгоритмическое продвижение.</p></div></div>
+        <div class="stage"><div class="stage-dot">3</div><div><h5>Один пост — одна мысль</h5><p>Длинные релизы не работают в ленте мессенджера. Сложная тема разбивается на 2–3 последовательных поста.</p></div></div>
+        <div class="stage"><div class="stage-dot">4</div><div><h5>Графический шаблон по «Коду молодёжи»</h5><p>Узнаваемый стиль карточек повышает кликабельность. Шаблон готовится в Этапе 1 (январь).</p></div></div>
+        <div class="stage"><div class="stage-dot">5</div><div><h5>Конкретный CTA с дедлайном</h5><p>Не «принимайте участие», а «Подайте заявку до 23:59 15 мая, грант до 1 млн рублей по ссылке».</p></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="accent-line reveal"><span>Механики вовлечения</span></div>
+      <div class="sec-body reveal reveal-delay-1">
+        <ul>
+          <li><strong>Опросы прямо в канале.</strong> Раз в неделю — короткий опрос с тремя вариантами ответа. Темы: «Какой формат хотите видеть чаще», «Какой регион интересен», «Тема для прямого эфира».</li>
+          <li><strong>Пользовательский контент.</strong> Конкурс «Что я сделал этим летом» — подписчики присылают короткие видео, лучшие попадают в канал. Самовоспроизводящийся механизм роста.</li>
+          <li><strong>Регулярная Q&amp;A-рубрика.</strong> Каждую среду — один вопрос подписчика и развёрнутый ответ эксперта.</li>
+          <li><strong>Игры и интерактивы.</strong> Викторины ко Дню космонавтики, Дню Победы, Дню молодёжи.</li>
+        </ul>
+      </div>
+      <div class="accent-line reveal"><span>Три голоса канала</span></div>
+      <div class="tbl-wrap reveal reveal-delay-1">
+        <table>
+          <thead><tr><th>Голос</th><th>Тип контента</th><th>Доля</th></tr></thead>
+          <tbody>
+            <tr><td>Деловой</td><td>Анонсы конкурсов, официальные новости, цифры</td><td>~40%</td></tr>
+            <tr><td>Человеческий</td><td>Истории людей, команды, закулисье</td><td>~40%</td></tr>
+            <tr><td>Эмоциональный</td><td>Праздники, патриотика, культура</td><td>~20%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- s8 -->
+<div id="s8" class="page-section">
+  <div class="sec-label reveal">Раздел 8</div>
+  <div class="sec-title reveal reveal-delay-1">План внедрения<br>по этапам</div>
+  <div class="stages reveal reveal-delay-2">
+    <div class="stage"><div class="stage-dot" style="height: 140px">11</div><div><h5>Подготовка — Январь 2026</h5><ul><li>Утверждение медиаплана и закрепление ответственных за каждую рубрику.</li><li>Подготовка визуального шаблона карточек по гайдлайну «Код молодёжи».</li><li>Внедрение кнопки «Поделиться в MAX» на fadm.gov.ru — техническое задание.</li><li>Регламент эксклюзивных публикаций: что, когда, кем согласовывается.</li><li>Подготовка пакета баннеров для партнёрских СМИ.</li></ul></div></div>
+    <div class="stage"><div class="stage-dot">2</div><div><h5>Запуск — Февраль–Март 2026</h5><ul><li>Старт всех семи регулярных рубрик с фиксированным расписанием.</li><li>Запуск нишевого канала «Росмолодёжь.Гранты».</li><li>Внедрение кнопки «Поделиться в MAX» на сайте.</li><li>Договорённости с 5 партнёрскими СМИ о размещении ссылок.</li><li>Первая трансляция через ВК Видео в MAX.</li></ul></div></div>
+    <div class="stage"><div class="stage-dot">3</div><div><h5>Расширение — Апрель-Июнь 2026</h5><ul><li>Запуск канала «Росмолодёжь.Форумы» — к началу летнего сезона.</li><li>Цикл трансляций со всех летних форумов с push-уведомлениями.</li><li>Первый прямой эфир Г. А. Гурова с ответами на вопросы подписчиков.</li><li>Договорённости с региональными телеканалами о QR-кодах MAX в эфирах.</li></ul></div></div>
+    <div class="stage"><div class="stage-dot">4</div><div><h5>Закрепление — Июль–Сентябрь 2026</h5><ul><li>Освещение МФМ-2026: ежедневные дайджесты, трансляции пленарных, эксклюзивные интервью.</li><li>Запуск канала «Росмолодёжь.Карьера» к началу учебного года.</li><li>Серия «100 молодых имён России» — растягивается до Дня молодёжи 2027.</li></ul></div></div>
+    <div class="stage"><div class="stage-dot">5</div><div><h5>Итоги и планирование — Октябрь-Декабрь 2026</h5><ul><li>Запуск премии «Лица года Росмолодёжи» с прямой трансляцией финала.</li><li>Итоговый интерактивный лонгрид «Год в цифрах».</li><li>Анализ результатов внедрения восьми практик, корректировка стратегии на 2027.</li></ul></div></div>
+  </div>
+</div>
+
+<!-- ══ PART II ══ -->
+<div id="part2" class="part-banner" data-num="II">
+  <div class="part-label reveal">Часть II</div>
+  <h2 class="reveal reveal-delay-1">Поддерживающие<br>платформы</h2>
+</div>
+<div class="page-section">
+  <div class="sec-body reveal"><p>Все остальные платформы Росмолодёжи играют поддерживающую роль по отношению к MAX. Их главная задача — перенаправление аудитории и формирование внешней инфраструктуры вокруг главного канала.</p></div>
+</div>
+
+<!-- s9 -->
+<div id="s9" class="page-section">
+  <div class="sec-label reveal">Раздел 9</div>
+  <div class="sec-title reveal reveal-delay-1">ВКонтакте — статистика,<br>аудитория, контент</div>
+  <p class="sec-intro reveal">Статистика за период 23 марта — 21 апреля 2026.</p>
+  <div class="metrics reveal reveal-delay-2">
+    <div class="mcard b"><div class="mcard-val" style="font-family: &quot;ALS Granate&quot;; font-size: 33px; width: 140px">268 780</div><div class="mcard-delta neg">−55 100 после очистки</div><div class="mcard-lbl">Подписчики</div></div>
+    <div class="mcard"><div class="mcard-val" style="font-size: 33px; font-family: &quot;ALS Granate&quot;">25 700</div><div class="mcard-delta">+6%</div><div class="mcard-lbl">Посещения сообщества</div></div>
+    <div class="mcard"><div class="mcard-val" style="font-family: &quot;ALS Granate&quot;">1,8 млн</div><div class="mcard-delta">+8%</div><div class="mcard-lbl">Просмотры контента</div></div>
+    <div class="mcard p"><div class="mcard-val" style="font-family: &quot;ALS Granate&quot;; width: 150px">392 500</div><div class="mcard-delta neg">−19%</div><div class="mcard-lbl">Охват контента</div></div>
+    <div class="mcard" style="font-family: &quot;ALS Granate&quot;"><div class="mcard-val">46</div><div class="mcard-delta">+2%</div><div class="mcard-lbl">Подписки на уведомления</div></div>
+    <div class="mcard" style="font-family: &quot;ALS Granate&quot;"><div class="mcard-val">29</div><div class="mcard-delta">+26%</div><div class="mcard-lbl" style="width: 150px">Переходы по кнопке</div></div>
+  </div>
+  <div class="accent-line reveal"><span>Структура аудитории</span></div>
+  <div class="tbl-wrap reveal">
+    <table>
+      <thead><tr><th>Параметр</th><th>Значение</th></tr></thead>
+      <tbody>
+        <tr><td>Пол</td><td>Женщины 71,5%, мужчины 28,2%</td></tr>
+        <tr class="tr-hi"><td>Крупнейшая возрастная группа</td><td>35–44 года (13%). Группа 18–20 лет — всего 10%</td></tr>
+        <tr><td>Топ-города</td><td>Москва 39,2%, Санкт-Петербург 17,6%, Челябинск 7%</td></tr>
+        <tr><td>Устройства</td><td>Мобильные 90,6%, iOS 48,1%, Android 41%</td></tr>
+        <tr><td>Источники переходов</td><td>Прямые ссылки 43,2%, поиск ВК 12,4%, страницы сообществ 8,9%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="two-col reveal reveal-delay-1">
+    <div>
+      <div class="accent-line"><span>Главные проблемы</span></div>
+      <ul class="sec-body" style="padding-left:18px">
+        <li>Структурное несоответствие: основная аудитория — родители, а не молодёжь.</li>
+        <li>Конверсия: 25 700 посещений → 29 кликов и 46 подписок на уведомления.</li>
+        <li>Охват −19% при просмотрах +8% — алгоритмы сужают органику.</li>
+        <li>55 000 неактивных аккаунтов прошли очистку.</li>
+        <li>Нет постоянных рубрик с привязкой к дням недели.</li>
+        <li>800–1 200 знаков под постом при мобильной аудитории.</li>
+        <li>Слабая работа с видео при видео-платформе 
+2026 года.</li>
+      </ul>
+    </div>
+    <div>
+      <div class="accent-line"><span>Что переделать</span></div>
+      <div class="stages">
+        <div class="stage"><div class="stage-dot" style="background:var(--dark);font-size:.7rem">1</div><div><h5>Сократить объём поста до 400–600 знаков</h5></div></div>
+        <div class="stage"><div class="stage-dot" style="background:var(--dark);font-size:.7rem">2</div><div><h5>Минимум 4 коротких клипа в неделю</h5></div></div>
+        <div class="stage"><div class="stage-dot" style="background:var(--dark);font-size:.7rem">3</div><div><h5>Рубрики синхронизировать с MAX</h5></div></div>
+        <div class="stage"><div class="stage-dot" style="background:var(--dark);font-size:.7rem">4</div><div><h5>Единый визуальный шаблон по гайдлайну</h5></div></div>
+        <div class="stage"><div class="stage-dot" style="background:var(--dark);font-size:.7rem">5</div><div><h5>Каждый пост — CTA в MAX-канал</h5><p>База ВКонтакте (268 тыс.) → источник роста MAX.</p></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- s10 -->
+<div id="s10" class="page-section">
+  <div class="sec-label reveal">Раздел 10</div>
+  <div class="sec-title reveal reveal-delay-1">Сайт fadm.gov.ru —<br>сеO-витрина и точка конверсии</div>
+  <div class="metrics reveal reveal-delay-2">
+    <div class="mcard p"><div class="mcard-val" style="font-family: &quot;ALS Granate&quot;">1 244</div><div class="mcard-delta neg">−31,4%</div><div class="mcard-lbl">Уникальных посетителей</div></div>
+    <div class="mcard"><div class="mcard-val" style="font-family: &quot;ALS Granate&quot;">1 340</div><div class="mcard-delta neg">−32,5%</div><div class="mcard-lbl">Визиты</div></div>
+    <div class="mcard"><div class="mcard-val" style="font-family: &quot;ALS Granate&quot;">2 497</div><div class="mcard-delta neg">−32,1%</div><div class="mcard-lbl">Просмотры страниц</div></div>
+    <div class="mcard b"><div class="mcard-val" style="font-family: &quot;ALS Granate&quot;">132</div><div class="mcard-delta neu">—</div><div class="mcard-lbl">Целевые конверсии</div></div>
+  </div>
+  <div class="ibox reveal"><strong>Диагноз</strong>Объём несопоставимо мал для федерального ведомства. Все показатели упали на треть. Сайт фактически выпал из цифровой экосистемы агентства.</div>
+  <div class="two-col reveal reveal-delay-1">
+    <div>
+      <div class="accent-line"><span>SEO — план восстановления трафика</span></div>
+      <div class="sec-body">
+        <ul>
+          <li><strong>«Гранты»</strong> — по одной странице на каждый конкурс с условиями, инструкцией, историями победителей и FAQ.</li>
+          <li><strong>«Форумы»</strong> — страницы под Тавриду, Машук, Территорию смыслов, iВолгу с видеоархивом и регистрацией.</li>
+          <li><strong>«Волонтёрство», «Карьера», «Образование»</strong> — точки входа для соответствующих аудиторий.</li>
+          <li>Внедрение кнопки «Поделиться в MAX» — приоритетная задача.</li>
+          <li>Аудит скорости загрузки. Микроразметка Schema.org. XML-карта с приоритетами.</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="accent-line"><span>Целевые показатели</span></div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Показатель</th><th>Сейчас</th><th>6 мес.</th><th>12 мес.</th></tr></thead>
+          <tbody>
+            <tr><td>Посетители/мес</td><td>1 244</td><td>5 000</td><td>15 000</td></tr>
+            <tr><td>Запросов в топ-10</td><td>ед.</td><td>20–30</td><td>60–80</td></tr>
+            <tr><td>Конверсии/мес</td><td>132</td><td>500</td><td>1 500</td></tr>
+            <tr class="tr-hi"><td>Переходы → MAX</td><td>0</td><td>500</td><td>2 000</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- s11 -->
+<div id="s11" class="page-section">
+  <div class="sec-label reveal">Раздел 11</div>
+  <div class="sec-title reveal reveal-delay-1">Дзен —<br>стратегическое решение</div>
+  <div class="metrics reveal reveal-delay-2" style="grid-template-columns:repeat(3,1fr)">
+    <div class="mcard p"><div class="mcard-val" style="font-family: &quot;ALS Granate&quot;">757</div><div class="mcard-delta neg">критически мало</div><div class="mcard-lbl">Подписчиков</div></div>
+    <div class="mcard"><div class="mcard-val" style="font-family: &quot;ALS Granate&quot;">+17</div><div class="mcard-delta neu">за период</div><div class="mcard-lbl">Прирост</div></div>
+    <div class="mcard" style="font-family: &quot;ALS Granate&quot;"><div class="mcard-val">0</div><div class="mcard-lbl">Подписались за зафиксированную дату</div></div>
+  </div>
+  <div class="sec-body reveal"><p>Для федерального агентства 757 подписчиков — критически низкий показатель. При поиске контент Росмолодёжи не появляется по большинству целевых тематических запросов.</p></div>
+  <div class="two-col reveal reveal-delay-1">
+    <div class="ibox g"><strong>Вариант А — Перезапуск</strong>Регулярная публикация лонгридов (4–6 в месяц) под высокочастотные запросы: «как получить грант для молодёжи», «молодёжные форумы 2026», «как стать волонтёром Росмолодёжи». В каждой статье — врезка со ссылкой на MAX. Цель к концу года: 5–7 тысяч подписчиков и 10 тысяч переходов на сайт.</div>
+    <div class="ibox"><strong>Вариант Б — Закрытие с переадресацией</strong>Канал замораживается. Подписчикам — сообщение о переходе на MAX. Ресурсы редакции → на сайт и MAX. Допустимо при отсутствии ресурсов на качественные лонгриды.</div>
+  </div>
+  <div class="callout reveal">
+    <div class="callout-label">Рекомендация</div>
+    <p>Вариант А — перезапуск с фокусом на SEO-лонгриды и переадресацию трафика на MAX-канал. Дзен может работать как третий источник трафика для MAX после сайта и ВКонтакте.</p>
+  </div>
+</div>
+
+<!-- ══ PART III ══ -->
+<div id="part3" class="part-banner" data-num="III">
+  <div class="part-label reveal">Часть III</div>
+  <h2 class="reveal reveal-delay-1">Конкурентная среда<br>и положение Росмолодёжи</h2>
+</div>
+
+<!-- s12 -->
+<div id="s12" class="page-section">
+  <div class="sec-label reveal">Раздел 12</div>
+  <div class="sec-title reveal reveal-delay-1">Анализ конкурентов</div>
+  <div class="comp-grid reveal reveal-delay-2">
+    <div class="comp">
+      <div class="comp-name">Движение Первых</div>
+      <p>Главное отличие — разветвлённая сеть тематических каналов вместо одного универсального: «Творчество», «Наука», региональные сообщества.</p>
+      <p><strong>Что работает:</strong></p>
+      <ul>
+        <li>Сегментация: сеть тематических каналов</li>
+        <li>Брендированные акции с собственными хэштегами</li>
+        <li>Личный канал руководителя — «человеческое лицо»</li>
+        <li>Заметно более высокая доля видео</li>
+        <li>Активное использование пользовательского контента</li>
+      </ul>
+    </div>
+    <div class="comp">
+      <div class="comp-name">Россия — страна возможностей</div>
+      <p>Главное отличие — омниканальное присутствие: MAX, ВКонтакте, Telegram, ОК, Дзен, TenChat, Yappy, YouTube, Rutube.</p>
+      <p><strong>Что работает:</strong></p>
+      <ul>
+        <li>Сильный сайт rsv.ru с личным кабинетом и воронкой</li>
+        <li>Каждый продукт — свой бренд и аудитория</li>
+        <li>Регулярное освещение через крупные федеральные СМИ</li>
+      </ul>
+    </div>
+    <div class="comp">
+      <div class="comp-name">Минпросвещения и Минобрнауки</div>
+      <p>Работают с пересекающейся аудиторией: школьники, студенты, родители, учителя, преподаватели.</p>
+      <p><strong>Что работает:</strong></p>
+      <ul>
+        <li>Чёткая привязка к образовательному календарю</li>
+        <li>Регулярные пресс-конференции, цитируемые СМИ</li>
+        <li>Telegram как основной канал для экспертной аудитории</li>
+      </ul>
+    </div>
+  </div>
+  <div class="two-col reveal reveal-delay-1">
+    <div>
+      <div class="accent-line"><span>Что перенять</span></div>
+      <div class="sec-body">
+        <ul>
+          <li><strong>Сегментацию контента по аудиториям.</strong> Один канал не может говорить с подростком, студентом, специалистом и грантополучателем одинаково.</li>
+          <li><strong>Личные коммуникации руководства</strong> с цитированием через MAX как первоисточник.</li>
+          <li><strong>Видео-первый подход:</strong> снижение доли видео ниже 20% = потеря охвата.</li>
+          <li><strong>Сайт как конверсионная воронка,</strong> а не информационный архив.</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="accent-line"><span>Где Росмолодёжь сильнее</span></div>
+      <div class="sec-body">
+        <ul>
+          <li><strong>Брендинг.</strong> Гайдлайн «Код молодёжи» от Студии Артемия Лебедева — лучший пакет фирменной идентичности среди молодёжных и образовательных госструктур России.</li>
+          <li><strong>Объём публикационной активности в MAX.</strong> Лидерство по интенсивности постинга среди молодёжных госструктур.</li>
+          <li><strong>Размер базы ВКонтакте.</strong> 268 тысяч подписчиков — один из крупнейших пулов в нише.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- s13 -->
+<div id="s13" class="page-section">
+  <div class="sec-label reveal">Раздел 13</div>
+  <div class="sec-title reveal reveal-delay-1">Сравнение тонов<br>и форматов между платформами</div>
+  <div class="sec-body reveal"><p>Одна  публикация часто выходит одновременно в ВКонтакте и MAX в одинаковом виде — 
+трата половины усилий редакции на дубликаты.</p></div>
+  <div class="tbl-wrap reveal reveal-delay-1">
+    <table>
+      <thead><tr><th>Платформа</th><th>Что работает лучше всего</th><th>Идеальный формат</th></tr></thead>
+      <tbody>
+        <tr class="tr-hi"><td>MAX</td><td>Эксклюзивы, дайджесты с фактами, карусели, трансляции</td><td>Карточка с фактом + 3–5 новостей дня; видео-эфир</td></tr>
+        <tr><td>ВКонтакте</td><td>Короткие видео, истории, эмоциональный контент</td><td>Клип 15–60 сек + короткий текст + ссылка на MAX</td></tr>
+        <tr><td>Дзен</td><td>Лонгриды под поисковые запросы, разборы</td><td>Статья 2 000–4 000 знаков + врезка с ссылкой на MAX</td></tr>
+        <tr><td>Сайт</td><td>Точка завершения целевого действия, SEO-витрина</td><td>Лендинг конкретной программы + кнопка «Поделиться в MAX»</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout reveal">
+    <div class="callout-label">Главный принцип</div>
+    <p>MAX — финальная точка коммуникации. Все остальные платформы работают 
+как привод трафика на главный канал.</p>
+  </div>
+</div>
+
+<!-- ══ PART IV ══ -->
+<div id="part4" class="part-banner" data-num="IV">
+  <div class="part-label reveal">Часть IV</div>
+  <h2 class="reveal reveal-delay-1">Медиаплан 2026</h2>
+</div>
+
+<!-- s14 -->
+<div id="s14" class="page-section">
+  <div class="sec-label reveal">Раздел 14</div>
+  <div class="sec-title reveal reveal-delay-1">Аудит существующего плана</div>
+  <p class="sec-intro reveal">Статистика за период 23 марта — 21 апреля 2026.</p>
+  <div class="two-col reveal reveal-delay-1">
+    <div>
+      <div class="accent-line"><span>Слабые стороны</span></div>
+      <div class="sec-body">
+        <ul>
+          <li>Резкая неравномерность: 28 из 70 событий в апреле (40% годового объёма), а в мае, июне и июле нет ни одного отдельного раздела.</li>
+          <li>Низкая проработка деталей: 22 случая «дата уточняется», 18 случаев «спикеры определяются», более 30 случаев общего «соцсети» без указания конкретных аккаунтов.</li>
+          <li><strong>MAX полностью отсутствует во всех записях</strong> — главный пробел плана, который нужно исправить в первую очередь.</li>
+          <li>Только инфоповоды, нет регулярного контента между крупными событиями.</li>
+          <li>Нет рубрик с привязкой к дням недели и платформам.</li>
+          <li>Не указаны KPI на уровне событий — целевые охваты, аудитория, ожидаемые результаты.</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Месяц</th><th>Событий</th><th>Состояние</th></tr></thead>
+          <tbody>
+            <tr><td>Январь</td><td>7</td><td>Требует доработки</td></tr>
+            <tr class="tr-warn"><td>Февраль</td><td>3</td><td>Критически мало</td></tr>
+            <tr><td>Март</td><td>5</td><td>Недостаточно</td></tr>
+            <tr class="tr-hi"><td>Апрель</td><td>28</td><td>Перегружен — 40%!</td></tr>
+            <tr class="tr-bad"><td>Май</td><td>0</td><td>Полностью отсутствует</td></tr>
+            <tr class="tr-bad"><td>Июнь</td><td>0</td><td>Полностью отсутствует</td></tr>
+            <tr class="tr-bad"><td>Июль</td><td>0</td><td>Полностью отсутствует</td></tr>
+            <tr><td>Август</td><td>5</td><td>Недостаточно</td></tr>
+            <tr><td>Сентябрь</td><td>4</td><td>Недостаточно</td></tr>
+            <tr><td>Октябрь</td><td>8</td><td>Минимально приемлемо</td></tr>
+            <tr><td>Ноябрь</td><td>7</td><td>Минимально приемлемо</td></tr>
+            <tr class="tr-warn"><td>Декабрь</td><td>3</td><td>Критически мало</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- s15 -->
+<div id="s15" class="page-section">
+  <div class="sec-label reveal">Раздел 15</div>
+  <div class="sec-title reveal reveal-delay-1">Что добавляем сверху:<br>рубрики и регулярный контент</div>
+  <div class="tbl-wrap reveal reveal-delay-2">
+    <table>
+      <thead><tr><th>Уровень</th><th>Что это</th><th>Частота</th></tr></thead>
+      <tbody>
+        <tr><td>Регулярные рубрики</td><td>Постоянные тематические рубрики с привязкой к дням</td><td>Каждую неделю</td></tr>
+        <tr class="tr-hi"><td>Эксклюзивы для MAX</td><td>Контент, выходящий сначала в MAX</td><td>Минимум 3 раза в неделю</td></tr>
+        <tr><td>Видео-трансляции</td><td>Прямые эфиры через ВК Видео в MAX</td><td>1–2 раза в месяц</td></tr>
+        <tr><td>Реактивный контент</td><td>Реакция на инфоповоды дня и тренды</td><td>Ежедневно</td></tr>
+        <tr><td>Сезонные кампании</td><td>Темы, привязанные к жизни молодёжи</td><td>4–6 в год</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- s16 CALENDAR WITH TABS -->
+<div id="s16" class="page-section">
+  <div class="sec-label reveal">Раздел 16</div>
+  <div class="sec-title reveal reveal-delay-1">Календарный план с акцентом на MAX:<br>январь — декабрь</div>
+
+  <div class="month-tabs reveal reveal-delay-2" id="mtabs">
+    <div class="mtab active" data-panel="q1">I квартал — Январь–Март</div>
+    <div class="mtab" data-panel="q2">II квартал — Апрель–Июнь</div>
+    <div class="mtab" data-panel="q3">III квартал — Июль–Сентябрь</div>
+    <div class="mtab" data-panel="q4">IV квартал — Октябрь–Декабрь</div>
+  </div>
+
+  <div class="month-panels">
+    <!-- Q1 -->
+    <div class="mpanel active" id="q1">
+      <div class="mth"><div class="mth-head"><span class="mth-name">Январь</span><span class="mth-theme">Молодость и старт года</span></div><div class="mth-body"><h5>Ключевые события</h5><ul><li>22 янв. — законопроект о поддержке молодёжных НКО</li><li>23 янв. — запуск конкурса волонтёров МФМ-2026</li><li>25 янв., День студента — «Твой Ход» VI, гранты для вузов, акция РСО</li><li>28 янв. — «Герои Крыма» (Меганом)</li></ul><h5>Фокус MAX</h5><ul><li>Запуск канала «Росмолодёжь.Гранты»</li><li>Старт всех семи регулярных рубрик</li><li>Регламент эксклюзивных публикаций: 3 в неделю</li><li>Серия видео «Один день из жизни студента из…» (5–7 регионов)</li></ul></div><div class="mth-kpi">KPI: MAX +5–7% · «Гранты» — 1 000 подписчиков · 7 рубрик в работе</div></div>
+      <div class="mth"><div class="mth-head"><span class="mth-name">Февраль</span><span class="mth-theme">Цели и направления</span></div><div class="mth-body"><h5>Ключевые события</h5><ul><li>6 фев. — запуск регистрации на МФМ-2026</li><li>10 фев. — приём заявок Гранты, 1 сезон</li><li>Оргкомитет МФМ-2026, Екатеринбург</li></ul><h5>Фокус MAX</h5><ul><li>14 фев. — «Любовь к делу»: истории грантополучателей</li><li>23 фев. — серия о молодых офицерах и инженерах (без официоза)</li><li>«Карта возможностей» на сайте с кнопкой MAX</li><li>Первая трансляция через ВК Видео в MAX</li></ul></div><div class="mth-kpi">KPI: MAX — 26 000 · МФМ-2026 — 50 000+ регистраций · Карта запущена</div></div>
+      <div class="mth"><div class="mth-head"><span class="mth-name">Март</span><span class="mth-theme">Лидерство и наука</span></div><div class="mth-body"><h5>Ключевые события</h5><ul><li>2 марта — регистрация на форум Волонтёров-медиков</li><li>4 марта — заседание Наблюдательного совета БЧП</li><li>17 марта — «Новые горизонты», Донбасс, Новороссия</li><li>20 марта — завершение приёма заявок Гранты, 1 сезон</li></ul><h5>Фокус MAX</h5><ul><li>8 марта — «Молодые героини»: портреты женщин-лидеров</li><li>Кнопка «Поделиться в MAX» на fadm.gov.ru</li><li>Дзен-лонгриды «Как получить грант пошагово»</li><li>Договорённости с 5 партнёрскими СМИ о баннерах</li></ul></div><div class="mth-kpi" style="padding: 28px 18px 10px">KPI: MAX — 30 000 · Кнопка MAX внедрена · 5 SEO-статей · 5 партнёрств</div></div>
+    </div>
+    <!-- Q2 -->
+    <div class="mpanel" id="q2">
+      <div class="mth"><div class="mth-head"><span class="mth-name">Апрель</span><span class="mth-theme">Космос и большие смыслы</span></div><div class="mth-body"><h5>Ключевые события (28 событий)</h5><ul><li>5–13 апр. — акция «Будь здоров!» (Волонтёры-медики)</li><li>8 апр. — «Больше, чем наука», НЦ «Россия»</li><li>10 апр. — итоговая коллегия Росмолодёжи</li><li>12 апр. — День космонавтики + Пасха</li><li>14–15 апр. — Молодёжный форум ЭКОСОС ООН</li><li>20–26 апр. — Профориентационная неделя</li><li>21 апр. — Медиацентр в Ростове</li><li>28–30 апр. — Кавказский инвестфорум</li></ul><h5>Фокус MAX</h5><ul><li>12 апр. — «Молодёжь и космос»: интервью с Роскосмосом</li><li>Путеводитель «Главные события месяца» — карточки</li><li>Запуск канала «Росмолодёжь.Форумы»</li><li>Минимум 4 трансляции через ВК Видео в MAX</li></ul></div><div class="mth-kpi">KPI: MAX — 35 000 · «Форумы» — 500 на старте · 4 трансляции</div></div>
+      <div class="mth"><div class="mth-head"><span class="mth-name">Май</span><span class="mth-theme">Память и Победа</span></div><div class="mth-body"><h5>Ключевые события</h5><ul><li>1 мая — субботники по всей стране</li><li>7–11 мая, Москва/Волгоград — «Наследие Великой Победы»</li><li>1–7 мая — приём заявок «Двигай сообщества»</li></ul><h5>Фокус MAX</h5><ul><li>9 мая — «Истории нашей памяти»: молодые читают письма с фронта. Эксклюзив, без пафоса.</li><li>25 мая, последний звонок — «Что делать после школы»</li><li>Первый прямой эфир Г. А. Гурова в MAX</li></ul></div><div class="mth-kpi">KPI: MAX — 38 000 · «Истории памяти» — 500 000+ просмотров · Эфир — 10 000 зрителей</div></div>
+      <div class="mth"><div class="mth-head"><span class="mth-name">Июнь</span><span class="mth-theme">Лето и поступление</span></div><div class="mth-body"><h5>Ключевые события</h5><ul><li>12 июня — День России</li><li>18–22 июня — «Спасибо медикам»</li><li>27 июня — День молодёжи — главный праздник года</li></ul><h5>Фокус MAX</h5><ul><li>1–10 июня — «Куда поступать»: разборы вузов и направлений</li><li>12 июня — «Я выбираю Россию»: молодые специалисты</li><li>27 июня — трансляция из Перми и Омска + голосование</li><li>Запуск видео-подкаста «Вопрос руководителю»</li></ul></div><div class="mth-kpi">KPI: MAX — 42 000 · День молодёжи — пиковый день охвата · «Форумы» — 3 000</div></div>
+    </div>
+    <!-- Q3 -->
+    <div class="mpanel" id="q3">
+      <div class="mth"><div class="mth-head"><span class="mth-name">Июль</span><span class="mth-theme">Форумы</span></div><div class="mth-body"><h5>Ключевые события</h5><ul><li>6–15 июля — Семейные ЗОЖ-фестивали</li><li>8 июля — День семьи, любви и верности</li><li>10 июля — экспертный совет БЧП в Совете Федерации</li><li>17 июля — «Школа юного экскурсовода»</li></ul><h5>Фокус MAX</h5><ul><li>Полное освещение: Таврида, Машук, Территория смыслов, Бирюса, iВолга, Амур</li><li>8 июля — спецпроект о молодых многодетных и ремесленных семьях</li><li>Старт серии «Регион месяца»</li><li>QR-коды MAX в эфирах 5 региональных телеканалов</li></ul></div><div class="mth-kpi">KPI: MAX — 46 000 · 3 материала по каждому форуму · 5 телеканалов с QR</div></div>
+      <div class="mth"><div class="mth-head"><span class="mth-name">Август</span><span class="mth-theme">Итоги лета</span></div><div class="mth-body"><h5>Ключевые события</h5><ul><li>1 авг. — приём заявок Гранты, 2 сезон</li><li>5–10 авг. — «Лечу в России», Красноярский край</li><li>7–10 авг. — фестиваль БЧП, Тульская обл.</li><li>8 авг. — 10 лет «Волонтёров-медиков»</li><li>22 авг. — День Государственного флага</li></ul><h5>Фокус MAX</h5><ul><li>22 авг. — «Россия в лицах»: молодые в традиционных костюмах о малой родине</li><li>Конкурс «Что я сделал этим летом» — UGC</li><li>«Школа будущего первокурсника» в Дзене с врезками на MAX</li></ul></div><div class="mth-kpi">KPI: MAX — 50 000 · UGC-конкурс — 1 000+ роликов · «Форумы» — 6 000</div></div>
+      <div class="mth"><div class="mth-head"><span class="mth-name">Сентябрь</span><span class="mth-theme">Знание и старт. Пик года.</span></div><div class="mth-body"><h5>Ключевые события</h5><ul><li>1 сент. — День знаний</li><li>11–17 сент. — Международный фестиваль молодёжи 2026 (МФМ-2026)</li><li>15 сент. — завершение заявок Гранты, 2 сезон</li><li>30 сент.–3 окт. — форум учёных «Полюс»</li></ul><h5>Фокус MAX</h5><ul><li>1 сент. — «Готов учиться»: прямые эфиры из вузов</li><li>МФМ-2026 — 7 дней: дайджест, трансляции пленарных, интервью</li><li>Запуск «Росмолодёжь.Карьера»</li><li>Старт «100 молодых имён России»</li></ul></div><div class="mth-kpi">KPI: MAX — 55 000 · МФМ-2026 — до 2 млн просмотров в MAX · «Карьера» — 1 000</div></div>
+    </div>
+    <!-- Q4 -->
+    <div class="mpanel" id="q4">
+      <div class="mth"><div class="mth-head"><span class="mth-name">Октябрь</span><span class="mth-theme">Профессии</span></div><div class="mth-body"><h5>Ключевые события</h5><ul><li>5 окт. — День учителя</li><li>7–11 окт. — «Территория БезОпасности»</li><li>Форум «Дигория»</li><li>Профориентационная неделя</li><li>Российская энергетическая неделя</li><li>16–18 окт. — «Таврида.АРТ»</li></ul><h5>Фокус MAX</h5><ul><li>5 окт. — «Молодой учитель»: педагоги в сёлах и малых городах</li><li>«Профессии будущего» — с Минтрудом и работодателями</li><li>Серия о молодых руководителях муниципалитетов («ГосСтарт»)</li><li>Минимум 5 крупных СМИ цитируют MAX как первоисточник</li></ul></div><div class="mth-kpi">KPI: MAX — 60 000 · 5 СМИ цитируют MAX · «Карьера» — 2 500</div></div>
+      <div class="mth"><div class="mth-head"><span class="mth-name">Ноябрь</span><span class="mth-theme">Единство и итоги</span></div><div class="mth-body"><h5>Ключевые события</h5><ul><li>4 ноя. — День народного единства</li><li>Форум «Время молодых»</li><li>Всероссийский патриотический форум</li><li>«Созидатели», «Молодой предприниматель России»</li><li>Итоговый форум лидеров молодёжных советов компаний</li></ul><h5>Фокус MAX</h5><ul><li>4 ноя. — «Россия из тысячи мест»: 20 коротких видео из 20 регионов</li><li>Запуск премии «Лица года Росмолодёжи» — голосование через MAX</li><li>Старт серии «Главное за 2026»</li></ul></div><div class="mth-kpi">KPI: MAX — 68 000 · Премия «Лица года» — 100 000 голосов · «Гранты» — 9 000</div></div>
+      <div class="mth"><div class="mth-head"><span class="mth-name">Декабрь</span><span class="mth-theme">Финал года</span></div><div class="mth-body"><h5>Ключевые события</h5><ul><li>5 дек. — День добровольца</li><li>9 дек. — День Героев Отечества</li><li>12 дек. — День Конституции</li><li>16 дек. — «Легенды Тавриды»</li><li>28 дек. — Главная морская ёлка страны</li></ul><h5>Фокус MAX</h5><ul><li>5 дек. — «Год в волонтёрстве» с Добро.рф</li><li>9 дек. — «Молодые герои нашего времени»</li><li>Финал «Лица года» — прямая трансляция в MAX через ВК Видео</li><li>20–31 дек. — лонгрид «Год в цифрах»</li><li>Анализ практик MAX, корректировка стратегии на 2027</li></ul></div><div class="mth-kpi">KPI: MAX — 75–80 000 · Нишевые каналы — 25 000+ совокупно · «Год в цифрах»</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ APPENDIX ══ -->
+<div id="appendix" class="part-banner" data-num="A">
+  <div class="part-label reveal">Приложение</div>
+  <h2 class="reveal reveal-delay-1">Фирменный стиль<br>«Код молодёжи»</h2>
+</div>
+
+<div class="page-section">
+  <div class="sec-body reveal"><p>Все материалы должны соответствовать гайдлайну, разработанному Студией Артемия Лебедева в 2025 году.</p></div>
+
+  <div class="two-col reveal reveal-delay-1">
+    <div>
+      <div class="accent-line"><span>Шрифты</span></div>
+      <div class="ibox" style="font-family:'Youthcode',sans-serif;font-size:1.6rem;line-height:1.3;padding:22px">
+        Youthcode Regular<br>
+        <span style="font-family:'ALS Granate',sans-serif;font-size:.78rem;color:var(--muted)">Заголовки всех визуальных материалов</span>
+      </div>
+      <div class="ibox" style="font-family:'ALS Granate',sans-serif;font-size:1.1rem;padding:22px">
+        ALS Granate Regular<br>
+        <strong>ALS Granate Bold</strong><br>
+        <span style="font-size:.78rem;color:var(--muted)">Основной текст, подписи, инфографика</span>
+      </div>
+    </div>
+    <div>
+      <div class="accent-line"><span>Маскот и тон</span></div>
+      <div style="display:flex;align-items:center;gap:24px;padding:16px;background:var(--surface);border:1px solid var(--border)">
+        <img src="assets/kon-ogon.png" style="height:90px;filter:drop-shadow(0 4px 16px rgba(232,57,42,.2))">
+        <div>
+          <div style="font-family:var(--h);font-size:1.1rem;margin-bottom:4px">Конь-огонь</div>
+          <div style="font-family:var(--b);font-size:.82rem;color:var(--muted);line-height:1.55">Основной графический персонаж бренда.<br>Кастомизируется под разные темы (творческий, успешный, чиловый).</div>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:14px">
+        <div class="callout-label">«Жить и создавать в России»</div>
+        <p>Тихий уважительный патриотизм без лозунгов, разговор на равных, диалог вместо шока. В MAX этот тон работает особенно сильно — мессенджер как личное пространство пользователя.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="accent-line reveal"><span>Цветовые палитры — принцип: по одному из каждой группы</span></div>
+  <div class="swatch-section reveal">
+    <div class="swatch-label">Базовые — традиционные ценности</div>
+    <div class="swatches">
+      <div class="swatch" style="background:#C1272D;color:#fff">Московский красный</div>
+      <div class="swatch" style="background:#5C2D91;color:#fff">Космический пурпурный</div>
+      <div class="swatch" style="background:#1B3A6B;color:#fff">Арктический синий</div>
+      <div class="swatch" style="background:#1A1618;color:#fff">Нефтяной чёрный</div>
+      <div class="swatch" style="background:#1E4D2B;color:#fff">Таёжный зелёный</div>
+      <div class="swatch" style="background:#6B3A2A;color:#fff">Ореховый бурый</div>
+      <div class="swatch" style="background:#A31830;color:#fff">Клюквенный алый</div>
+      <div class="swatch" style="background:#1A7EA8;color:#fff">Байкальский лазурный</div>
+    </div>
+  </div>
+  <div class="swatch-section reveal reveal-delay-1">
+    <div class="swatch-label">Свежие — современные технологичные</div>
+    <div class="swatches">
+      <div class="swatch" style="background:#E85296;color:#fff">Атомный розовый</div>
+      <div class="swatch" style="background:#4A8EC2;color:#fff">Гжельский голубой</div>
+      <div class="swatch" style="background:#7B52A8;color:#fff">Орбитальный аметистовый</div>
+      <div class="swatch" style="background:#2E8B57;color:#fff">Эрмитажный зелёный</div>
+      <div class="swatch" style="background:#F2C12E;color:#1A1618">Энергетический жёлтый</div>
+    </div>
+  </div>
+  <div class="swatch-section reveal reveal-delay-2">
+    <div class="swatch-label">Молодые — яркие и сочные</div>
+    <div class="swatches">
+      <div class="swatch" style="background:#F5D000;color:#1A1618">Степной жёлтый</div>
+      <div class="swatch" style="background:#F28AB8;color:#1A1618">Приморский розовый</div>
+      <div class="swatch" style="background:#5DBA6E;color:#fff">Берёзовый зелёный</div>
+      <div class="swatch" style="background:#F0AA78;color:#1A1618">Дачный персиковый</div>
+      <div class="swatch" style="background:#5BC8F5;color:#1A1618">Заполярный лазурный</div>
+      <div class="swatch" style="background:#6B8FD5;color:#fff">Волжский васильковый</div>
+      <div class="swatch" style="background:#2DAA8A;color:#fff">Кавказский изумрудный</div>
+      <div class="swatch" style="background:#B08AC8;color:#fff">Крымский лавандовый</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer style="background:var(--black);border-top:2px solid var(--red);padding:40px 80px;display:flex;align-items:center;justify-content:space-between;">
+  <div style="display:flex;align-items:center;gap:14px">
+    <img src="assets/kon-ogon.png" style="height:42px;opacity:.8">
+    <div>
+      <div style="font-family:var(--h);font-size:.95rem;color:#fff">Росмолодёжь</div>
+      <div style="font-family:var(--b);font-size:.74rem;color:var(--muted);margin-top:2px">Федеральное агентство по делам молодёжи · fadm.gov.ru</div>
+    </div>
+  </div>
+  <div style="font-family:var(--b);font-size:.74rem;color:#2E2B2D;text-align:right;line-height:1.8">
+    Цифровая стратегия 2026<br>MAX как главная платформа<br>27 апреля 2026
+  </div>
+</footer>
+
+</div><!-- /main -->
+
+<button id="scrollup" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// ── PROGRESS BAR
+const bar = document.getElementById('progress-bar');
+function updateProgress() {
+  const h = document.documentElement;
+  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+  bar.style.width = pct + '%';
+}
+window.addEventListener('scroll', updateProgress, {passive:true});
+
+// ── SCROLL UP
+const su = document.getElementById('scrollup');
+window.addEventListener('scroll', () => {
+  su.classList.toggle('visible', window.scrollY > 400);
+}, {passive:true});
+
+// ── REVEAL ON SCROLL
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── ACTIVE NAV
+const sections = [...document.querySelectorAll('[id]')];
+const navLinks = document.querySelectorAll('.nav-item');
+function updateNav() {
+  let cur = '';
+  sections.forEach(s => { if (s.getBoundingClientRect().top <= 120) cur = s.id; });
+  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+}
+window.addEventListener('scroll', updateNav, {passive:true});
+updateNav();
+
+// ── MONTH TABS
+document.getElementById('mtabs').addEventListener('click', e => {
+  const tab = e.target.closest('.mtab');
+  if (!tab) return;
+  document.querySelectorAll('.mtab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+  const id = tab.dataset.panel;
+  document.querySelectorAll('.mpanel').forEach(p => p.classList.toggle('active', p.id === id));
+  // animate new panel items
+  document.querySelectorAll('#' + id + ' .mth').forEach((m, i) => {
+    m.style.opacity = '0'; m.style.transform = 'translateY(16px)';
+    setTimeout(() => { m.style.transition = 'opacity .4s ease, transform .4s ease'; m.style.opacity = '1'; m.style.transform = 'none'; }, i * 80);
+  });
+});
+</script>
+</body>
+</html>
